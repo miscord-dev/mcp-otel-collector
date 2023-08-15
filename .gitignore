@@ -22,5 +22,7 @@
 # Go workspace file
 go.work
 
-builder-config.yaml
+cmd/mcpcol/*
+!cmd/mcpcol/builder-config.yaml.template
+
 dist/
