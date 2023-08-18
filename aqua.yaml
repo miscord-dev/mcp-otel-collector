@@ -1,0 +1,14 @@
+---
+# aqua - Declarative CLI Version Manager
+# https://aquaproj.github.io/
+registries:
+  - name: local
+    type: local
+    path: aqua/registry.yaml
+  - type: standard
+    ref: v4.38.0 # renovate: depName=aquaproj/aqua-registry
+
+packages:
+  - name: go.opentelemetry.io/collector/cmd/builder
+    registry: local
+    version: "v0.83.0"

@@ -1,0 +1,4 @@
+packages:
+- type: go_install
+  path: go.opentelemetry.io/collector/cmd/builder
+  description: custom otel-collector binary builder
