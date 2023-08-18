@@ -3,6 +3,8 @@
 before:
   hooks:
     - make genmcpcol
+
+
 builds:
   - env:
       - CGO_ENABLED=0
@@ -10,7 +12,12 @@ builds:
       - linux
       - windows
       - darwin
+    goarch:
+      - amd64
+      - arm64
     dir: ./cmd/mcpcol
+    binary: mcpcol
+
 
 archives:
   - format: tar.gz
@@ -26,10 +33,57 @@ archives:
     format_overrides:
     - goos: windows
       format: zip
+
+
+dockers:
+  - image_templates: ["ghcr.io/musaprg/{{ .ProjectName }}:{{ .Version }}-amd64"]
+    dockerfile: Dockerfile
+    use: buildx
+    build_flag_templates:
+      - --platform=linux/amd64
+      - --label=org.opencontainers.image.title={{ .ProjectName }}
+      - --label=org.opencontainers.image.description={{ .ProjectName }}
+      - --label=org.opencontainers.image.url=https://github.com/musaprg/{{ .ProjectName }}
+      - --label=org.opencontainers.image.source=https://github.com/musaprg/{{ .ProjectName }}
+      - --label=org.opencontainers.image.version={{ .Version }}
+      - --label=org.opencontainers.image.created={{ time "2006-01-02T15:04:05Z07:00" }}
+      - --label=org.opencontainers.image.revision={{ .FullCommit }}
+      - --label=org.opencontainers.image.licenses=MIT
+  - image_templates: ["ghcr.io/musaprg/{{ .ProjectName }}:{{ .Version }}-arm64v8"]
+    goarch: arm64
+    dockerfile: Dockerfile
+    use: buildx
+    build_flag_templates:
+      - --platform=linux/arm64/v8
+      - --label=org.opencontainers.image.title={{ .ProjectName }}
+      - --label=org.opencontainers.image.description={{ .ProjectName }}
+      - --label=org.opencontainers.image.url=https://github.com/musaprg/{{ .ProjectName }}
+      - --label=org.opencontainers.image.source=https://github.com/musaprg/{{ .ProjectName }}
+      - --label=org.opencontainers.image.version={{ .Version }}
+      - --label=org.opencontainers.image.created={{ time "2006-01-02T15:04:05Z07:00" }}
+      - --label=org.opencontainers.image.revision={{ .FullCommit }}
+      - --label=org.opencontainers.image.licenses=MIT
+
+
+docker_manifests:
+  - name_template: ghcr.io/musaprg/{{ .ProjectName }}:{{ .Version }}
+    image_templates:
+      - ghcr.io/musaprg/{{ .ProjectName }}:{{ .Version }}-amd64
+      - ghcr.io/musaprg/{{ .ProjectName }}:{{ .Version }}-arm64v8
+  - name_template: ghcr.io/musaprg/{{ .ProjectName }}:latest
+    image_templates:
+      - ghcr.io/musaprg/{{ .ProjectName }}:{{ .Version }}-amd64
+      - ghcr.io/musaprg/{{ .ProjectName }}:{{ .Version }}-arm64v8
+
+
 checksum:
   name_template: 'checksums.txt'
+
+
 snapshot:
   name_template: "{{ incpatch .Version }}-next"
+
+
 changelog:
   sort: asc
   filters:
