@@ -16,6 +16,11 @@ jobs:
     env:
       DOCKER_CLI_EXPERIMENTAL: "enabled"
     steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - uses: aquaproj/aqua-installer@v2.1.2
         with:
           aqua_version: v2.10.1
@@ -25,11 +30,6 @@ jobs:
         with:
           app_id: ${{ secrets.APP_ID }}
           private_key: ${{ secrets.PRIVATE_KEY }}
-      -
-        name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -46,6 +46,8 @@ jobs:
         with:
           go-version: '1.20'
           check-latest: true
+      -
+        run: make genmcpcol
       -
         name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v4
