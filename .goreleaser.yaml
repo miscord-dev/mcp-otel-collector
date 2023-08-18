@@ -36,20 +36,20 @@ archives:
 
 
 dockers:
-  - image_templates: ["ghcr.io/musaprg/{{ .ProjectName }}:{{ .Version }}-amd64"]
+  - image_templates: ["ghcr.io/miscord-dev/{{ .ProjectName }}:{{ .Version }}-amd64"]
     dockerfile: Dockerfile
     use: buildx
     build_flag_templates:
       - --platform=linux/amd64
       - --label=org.opencontainers.image.title={{ .ProjectName }}
       - --label=org.opencontainers.image.description={{ .ProjectName }}
-      - --label=org.opencontainers.image.url=https://github.com/musaprg/{{ .ProjectName }}
-      - --label=org.opencontainers.image.source=https://github.com/musaprg/{{ .ProjectName }}
+      - --label=org.opencontainers.image.url=https://github.com/miscord-dev/{{ .ProjectName }}
+      - --label=org.opencontainers.image.source=https://github.com/miscord-dev/{{ .ProjectName }}
       - --label=org.opencontainers.image.version={{ .Version }}
       - --label=org.opencontainers.image.created={{ time "2006-01-02T15:04:05Z07:00" }}
       - --label=org.opencontainers.image.revision={{ .FullCommit }}
       - --label=org.opencontainers.image.licenses=MIT
-  - image_templates: ["ghcr.io/musaprg/{{ .ProjectName }}:{{ .Version }}-arm64v8"]
+  - image_templates: ["ghcr.io/miscord-dev/{{ .ProjectName }}:{{ .Version }}-arm64v8"]
     goarch: arm64
     dockerfile: Dockerfile
     use: buildx
@@ -57,8 +57,8 @@ dockers:
       - --platform=linux/arm64/v8
       - --label=org.opencontainers.image.title={{ .ProjectName }}
       - --label=org.opencontainers.image.description={{ .ProjectName }}
-      - --label=org.opencontainers.image.url=https://github.com/musaprg/{{ .ProjectName }}
-      - --label=org.opencontainers.image.source=https://github.com/musaprg/{{ .ProjectName }}
+      - --label=org.opencontainers.image.url=https://github.com/miscord-dev/{{ .ProjectName }}
+      - --label=org.opencontainers.image.source=https://github.com/miscord-dev/{{ .ProjectName }}
       - --label=org.opencontainers.image.version={{ .Version }}
       - --label=org.opencontainers.image.created={{ time "2006-01-02T15:04:05Z07:00" }}
       - --label=org.opencontainers.image.revision={{ .FullCommit }}
@@ -66,14 +66,14 @@ dockers:
 
 
 docker_manifests:
-  - name_template: ghcr.io/musaprg/{{ .ProjectName }}:{{ .Version }}
+  - name_template: ghcr.io/miscord-dev/{{ .ProjectName }}:{{ .Version }}
     image_templates:
-      - ghcr.io/musaprg/{{ .ProjectName }}:{{ .Version }}-amd64
-      - ghcr.io/musaprg/{{ .ProjectName }}:{{ .Version }}-arm64v8
-  - name_template: ghcr.io/musaprg/{{ .ProjectName }}:latest
+      - ghcr.io/miscord-dev/{{ .ProjectName }}:{{ .Version }}-amd64
+      - ghcr.io/miscord-dev/{{ .ProjectName }}:{{ .Version }}-arm64v8
+  - name_template: ghcr.io/miscord-dev/{{ .ProjectName }}:latest
     image_templates:
-      - ghcr.io/musaprg/{{ .ProjectName }}:{{ .Version }}-amd64
-      - ghcr.io/musaprg/{{ .ProjectName }}:{{ .Version }}-arm64v8
+      - ghcr.io/miscord-dev/{{ .ProjectName }}:{{ .Version }}-amd64
+      - ghcr.io/miscord-dev/{{ .ProjectName }}:{{ .Version }}-arm64v8
 
 
 checksum:

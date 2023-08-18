@@ -16,6 +16,12 @@ jobs:
     env:
       DOCKER_CLI_EXPERIMENTAL: "enabled"
     steps:
+      - name: Generate token
+        id: generate_token
+        uses: tibdex/github-app-token@v1
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.PRIVATE_KEY }}
       -
         name: Checkout
         uses: actions/checkout@v3
@@ -30,7 +36,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
-          password: ${{ secret.GH_PAT }}
+          password: ${{ steps.generate_token.outputs.token }}
       -
         name: Set up Go
         uses: actions/setup-go@v4
@@ -46,5 +52,5 @@ jobs:
           version: latest
           args: release --rm-dist
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
 
